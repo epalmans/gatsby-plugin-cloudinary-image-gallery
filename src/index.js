@@ -64,7 +64,7 @@ const renderImageGridItem = (img, galleryItems, orientation, index) => {
     img.node.orientation
   );
 
-  //console.log(img.node);
+  console.log(img.node);
 
   const containerPadding = imgContainerPadding(imgOrientation);
 
@@ -193,7 +193,7 @@ const ImageGridItem = styled.a`
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  background-image: ${props => `url(${props.thumb})`};
+  background-image: ${props => `url("${props.thumb}")`};
   box-shadow: none;
   padding-bottom: ${props => props.padding};
   display: inline-block;
