@@ -64,15 +64,16 @@ const renderImageGridItem = (img, galleryItems, orientation, index) => {
     img.node.orientation
   );
 
-  console.log(img.node);
-  
+  //console.log(img.node);
+
   const containerPadding = imgContainerPadding(imgOrientation);
 
   return (
     <ImageGridItem
       onClick={() => openPhotoSwipe(galleryItems, index)}
       data-size={`${imgSize.width}x${imgSize.height}`}
-      key={img.node.publicId}
+      //key={img.node.publicId}
+      key={img.node.id}
       thumb={`${img.node.thumb}`}
       imgUrl={`${img.node.imgUrl}`}
       orientation={imgOrientation}
