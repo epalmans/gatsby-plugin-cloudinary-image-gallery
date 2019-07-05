@@ -52,6 +52,10 @@ const openPhotoSwipe = (items, index) => {
     options
   );
 
+  gallery.options.shareButtons = [
+    { id: 'download', label: 'Download', url: '{{raw_image_url}}', download: true }
+  ];
+
   gallery.init();
 };
 
@@ -64,7 +68,7 @@ const renderImageGridItem = (img, galleryItems, orientation, index) => {
     img.node.orientation
   );
 
-  console.log(img.node);
+  //console.log(img.node);
 
   const containerPadding = imgContainerPadding(imgOrientation);
 
@@ -113,8 +117,8 @@ const getListOfGalleryItems = (images, imagesVisibleCount) => {
       src: `${image.node.imgUrl}`,
       w: image.node.width,
       h: image.node.height,
-      title: image.node.context && image.node.context.custom && image.node.context.custom.alt ? image.node.context.custom.alt : '',
-      caption: image.node.context && image.node.context.custom && image.node.context.custom.caption ? image.node.context.custom.caption : '',
+      title: image.node.context && image.node.context.custom && image.node.context.custom.caption ? image.node.context.custom.caption : '',
+      description: image.node.context && image.node.context.custom && image.node.context.custom.alt ? image.node.context.custom.alt : '',
     };
   });
 
@@ -185,7 +189,7 @@ const ImageGridWrapper = styled.div`
 const ImageGridRow = styled.div`
   display: grid;
   grid-gap: 1em;
-  grid-template-columns: ${props => `repeat(${props.columns}, 1fr)`};
+  grid-template-columns: ${props => `repeat(auto-fit, minmax(250px, 1fr))`};
   margin-bottom: 1em;
 `;
 

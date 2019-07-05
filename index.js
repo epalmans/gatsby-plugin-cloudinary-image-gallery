@@ -1,8 +1,8 @@
 "use strict";
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
 exports.__esModule = true;
 exports.default = void 0;
@@ -22,6 +22,8 @@ require("photoswipe/dist/default-skin/default-skin.css");
 require("photoswipe/dist/photoswipe.css");
 
 var _PhotoSwipeDOM = _interopRequireDefault(require("./PhotoSwipeDOM"));
+
+var _jsxFileName = "C:\\dev\\gatsby-plugin-cloudinary-image-gallery\\src\\index.js";
 
 const getImageSize = (width, height, orientation) => {
   if (orientation === 'square') {
@@ -67,13 +69,19 @@ const openPhotoSwipe = (items, index) => {
     hideAnimationDuration: 0
   };
   var gallery = new _photoswipe.default(pswpElement, _photoswipeUiDefault.default, items, options);
+  gallery.options.shareButtons = [{
+    id: 'download',
+    label: 'Download',
+    url: '{{raw_image_url}}',
+    download: true
+  }];
   gallery.init();
 };
 
 const renderImageGridItem = (img, galleryItems, orientation, index) => {
   const imgOrientation = orientation ? orientation : img.node.orientation;
-  const imgSize = getImageSize(img.node.width, img.node.height, img.node.orientation);
-  console.log(img.node);
+  const imgSize = getImageSize(img.node.width, img.node.height, img.node.orientation); //console.log(img.node);
+
   const containerPadding = imgContainerPadding(imgOrientation);
   return _react.default.createElement(ImageGridItem, {
     onClick: () => openPhotoSwipe(galleryItems, index),
@@ -84,7 +92,12 @@ const renderImageGridItem = (img, galleryItems, orientation, index) => {
     imgUrl: `${img.node.imgUrl}`,
     orientation: imgOrientation,
     padding: containerPadding,
-    itemProp: "contentUrl"
+    itemProp: "contentUrl",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 76
+    },
+    __self: void 0
   });
 };
 
@@ -99,7 +112,12 @@ const renderRows = (columns, images, galleryItems, orientation) => {
     return _react.default.createElement(ImageGridRow, {
       columns: row,
       key: counter,
-      imgCount: row
+      imgCount: row,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 101
+      },
+      __self: void 0
     }, rowImages.map(img => {
       const index = galleryItems.findIndex(item => item.filename === img.node.filename);
       return renderImageGridItem(img, galleryItems, orientation, index);
@@ -114,8 +132,8 @@ const getListOfGalleryItems = (images, imagesVisibleCount) => {
       src: `${image.node.imgUrl}`,
       w: image.node.width,
       h: image.node.height,
-      title: image.node.context && image.node.context.custom && image.node.context.custom.alt ? image.node.context.custom.alt : '',
-      caption: image.node.context && image.node.context.custom && image.node.context.custom.caption ? image.node.context.custom.caption : ''
+      title: image.node.context && image.node.context.custom && image.node.context.custom.caption ? image.node.context.custom.caption : '',
+      description: image.node.context && image.node.context.custom && image.node.context.custom.alt ? image.node.context.custom.alt : ''
     };
   });
 
@@ -135,11 +153,12 @@ class ImageGrid extends _react.Component {
   }
 
   render() {
-    const _this$props = this.props,
-          folder = _this$props.folder,
-          columns = _this$props.columns,
-          data = _this$props.data,
-          orientation = _this$props.orientation;
+    const {
+      folder,
+      columns,
+      data,
+      orientation
+    } = this.props;
     let imageGridColumns = 2;
     let columnsPerRow;
     let galleryItems;
@@ -157,9 +176,38 @@ class ImageGrid extends _react.Component {
       galleryItems = getListOfGalleryItems(images);
     }
 
-    return _react.default.createElement(_react.Fragment, null, _react.default.createElement(ImageGridWrapper, null, columns && columns.length > 0 ? _react.default.createElement(_react.Fragment, null, renderRows(columnsPerRow, images, galleryItems, orientation)) : _react.default.createElement(ImageGridRow, {
-      columns: imageGridColumns
-    }, images.map((img, index) => renderImageGridItem(img, galleryItems, orientation, index)))), _react.default.createElement(_PhotoSwipeDOM.default, null));
+    return _react.default.createElement(_react.Fragment, {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 165
+      },
+      __self: this
+    }, _react.default.createElement(ImageGridWrapper, {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 166
+      },
+      __self: this
+    }, columns && columns.length > 0 ? _react.default.createElement(_react.Fragment, {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 168
+      },
+      __self: this
+    }, renderRows(columnsPerRow, images, galleryItems, orientation)) : _react.default.createElement(ImageGridRow, {
+      columns: imageGridColumns,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 172
+      },
+      __self: this
+    }, images.map((img, index) => renderImageGridItem(img, galleryItems, orientation, index)))), _react.default.createElement(_PhotoSwipeDOM.default, {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 179
+      },
+      __self: this
+    }));
   }
 
 }
@@ -170,14 +218,14 @@ const ImageGridWrapper = _styledComponents.default.div`
 const ImageGridRow = _styledComponents.default.div`
   display: grid;
   grid-gap: 1em;
-  grid-template-columns: ${props => `repeat(${props.columns}, 1fr)`};
+  grid-template-columns: ${props => `repeat(auto-fit, minmax(250px, 1fr))`};
   margin-bottom: 1em;
 `;
 const ImageGridItem = _styledComponents.default.a`
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  background-image: ${props => `url(${props.thumb})`};
+  background-image: ${props => `url("${props.thumb}")`};
   box-shadow: none;
   padding-bottom: ${props => props.padding};
   display: inline-block;

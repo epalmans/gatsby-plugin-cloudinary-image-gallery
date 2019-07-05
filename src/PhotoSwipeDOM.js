@@ -53,7 +53,7 @@ function PhotoSwipeDOM() {
           />
 
           <div className="pswp__caption">
-            <div className="pswp__caption__center" />
+            <div className="pswp__caption__center" style={{textAlign: 'center', fontSize: '20px', padding: '20px'}} />
           </div>
         </div>
       </div>

@@ -9,7 +9,7 @@ exports.sourceNodes = async (
   const queryParams = {
     tags: true,
     type: 'upload',
-    max_results: `24`,
+    max_results: 500,
     resource_type: 'image',
     context: true,
   };
