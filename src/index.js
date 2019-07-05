@@ -64,6 +64,8 @@ const renderImageGridItem = (img, galleryItems, orientation, index) => {
     img.node.orientation
   );
 
+  console.log(img.node);
+  
   const containerPadding = imgContainerPadding(imgOrientation);
 
   return (
