@@ -52,6 +52,7 @@ exports.sourceNodes = async (
           }`;
     const imageData = Object.assign(
       { folder,
+        filename,
         imgUrl,
         thumb,
         orientation,

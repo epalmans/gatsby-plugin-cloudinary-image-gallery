@@ -44,6 +44,7 @@ exports.sourceNodes = async ({
     const imgUrl = orientation === 'portrait' ? `https://res.cloudinary.com/${configOptions.cloudName}/image/upload/h_1200/v${image.version}/${image.public_id}.${image.format}` : `https://res.cloudinary.com/${configOptions.cloudName}/image/upload/w_1200/v${image.version}/${image.public_id}.${image.format}`;
     const imageData = Object.assign({
       folder,
+      filename,
       imgUrl,
       thumb,
       orientation,
